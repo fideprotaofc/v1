@@ -22,6 +22,10 @@
       --button-hover: #3730a3;
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -75,23 +79,39 @@
       margin: 0 auto;
     }
 
-    main.gallery a {
+    .image-wrapper {
       position: relative;
-      display: block;
-      border-radius: 8px;
       overflow: hidden;
+      border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s;
+      background-color: #222;
+      cursor: pointer;
     }
 
-    main.gallery a:hover {
-      transform: scale(1.03);
-    }
-
-    main.gallery img {
+    .image-wrapper img {
       width: 100%;
-      height: auto;
       display: block;
+      vertical-align: middle;
+    }
+
+    .download-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: var(--button-bg);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.875rem;
+      font-weight: bold;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      text-decoration: none;
+    }
+
+    .image-wrapper:hover .download-btn {
+      opacity: 1;
     }
 
     footer {
@@ -101,6 +121,32 @@
       color: #888;
       border-top: 1px solid var(--border);
       background-color: var(--bg);
+    }
+
+    /* Modal */
+    #modal {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #modal img {
+      max-width: 90%;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    #modal[open] {
+      display: flex;
+    }
+
+    #modal::backdrop {
+      background: rgba(0, 0, 0, 0.8);
     }
   </style>
 </head>
@@ -114,12 +160,14 @@
   </header>
 
   <main class="gallery">
-    <a href="wallpapers/wallpaper1.jpg" download>
-      <img src="wallpapers/wallpaper1.jpg" alt="Wallpaper 1">
-    </a>
-    <a href="wallpapers/wallpaper2.jpg" download>
-      <img src="wallpapers/wallpaper2.jpg" alt="Wallpaper 2">
-    </a>
+    <div class="image-wrapper">
+      <img src="wallpapers/wallpaper1.jpg" alt="Wallpaper 1" onclick="showModal(this.src, this.alt)" />
+      <a href="wallpapers/wallpaper1.jpg" download class="download-btn">Download</a>
+    </div>
+    <div class="image-wrapper">
+      <img src="wallpapers/wallpaper2.jpg" alt="Wallpaper 2" onclick="showModal(this.src, this.alt)" />
+      <a href="wallpapers/wallpaper2.jpg" download class="download-btn">Download</a>
+    </div>
     <!-- Adicione mais imagens aqui -->
   </main>
 
@@ -127,7 +175,13 @@
     &copy; 2024 Galeria de Wallpapers. Todos os direitos reservados.
   </footer>
 
+  <!-- Modal -->
+  <dialog id="modal" onclick="this.close()">
+    <img src="" alt="" id="modal-img" />
+  </dialog>
+
   <script>
+    // Tema claro/escuro com persistência
     function toggleTheme() {
       const body = document.body;
       const isDark = body.getAttribute('data-theme') === 'dark';
@@ -136,7 +190,6 @@
       localStorage.setItem('theme', isDark ? 'light' : 'dark');
     }
 
-    // Mantém o tema escolhido ao recarregar
     (function () {
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme) {
@@ -144,6 +197,24 @@
         document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? 'Modo Claro' : 'Modo Escuro';
       }
     })();
+
+    // Modal de imagem
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    function showModal(src, alt) {
+      modalImg.src = src;
+      modalImg.alt = alt;
+      modal.setAttribute('open', 'true');
+    }
+
+    modal.addEventListener('click', () => {
+      modal.removeAttribute('open');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') modal.removeAttribute('open');
+    });
   </script>
 </body>
 </html>
