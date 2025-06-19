@@ -1,665 +1,133 @@
-<html class="scroll-smooth" lang="pt-BR">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
-   Ferramentas para PC - by Fideprotaofc
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Roboto&amp;display=swap" rel="stylesheet"/>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loading...</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
   <style>
-   html, body {
-    font-family: 'Inter', 'Roboto', sans-serif;
-    background-color: #0f172a;
-    color: #e0e0e0;
-  }
-  /* Scrollbar for modal */
-  .modal-content::-webkit-scrollbar {
-    width: 8px;
-  }
-  .modal-content::-webkit-scrollbar-track {
-    background: #1e293b;
-  }
-  .modal-content::-webkit-scrollbar-thumb {
-    background-color: #475569;
-    border-radius: 10px;
-  }
-  /* Button icon scale on hover */
-  .btn-icon:hover {
-    transform: scale(1.05);
-  }
-  /* Smooth transitions */
-  .transition-smooth {
-    transition: all 0.3s ease;
-  }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+    .fade-out {
+      animation: fadeOut 0.8s ease forwards;
+    }
+    .gradient-animated {
+      background: linear-gradient(
+        270deg,
+        #3b82f6,
+        #60a5fa,
+        #3b82f6,
+        #2563eb,
+        #3b82f6
+      );
+      background-size: 600% 600%;
+      animation: gradientShift 3s ease infinite;
+    }
   </style>
- </head>
- <body class="min-h-screen flex flex-col">
-  <header class="py-8 px-4 text-center select-none">
-   <h1 class="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] tracking-wide mb-2" style="text-shadow: 0 0 8px #60a5fa, 0 0 12px #3b82f6;">
-    Ferramentas para PC - by Fideprotaofc
-   </h1>
-   <p class="text-gray-300 text-lg sm:text-xl max-w-xl mx-auto font-medium">
-    O melhor hub de ferramentas para otimizar seu computador.
-   </p>
-  </header>
-  <main class="flex-grow px-4 max-w-7xl mx-auto space-y-16 pb-16">
-   <!-- Botões principais -->
-   <section aria-label="Botões principais" class="flex flex-col sm:flex-row justify-center gap-8 max-w-4xl mx-auto">
-    <a aria-label="Calculadora" class="btn-icon group flex flex-col items-center bg-[#1e293b] hover:bg-[#334155] rounded-xl shadow-lg p-6 w-56 sm:w-64 transition-smooth transform hover:scale-105 select-none" href="calculadora.html">
-     <div class="text-5xl mb-3 text-[#60a5fa] group-hover:text-[#3b82f6] transition-smooth">
-      <i class="fas fa-calculator">
-      </i>
-     </div>
-     <span class="text-white font-semibold text-lg sm:text-xl">
-      Calculadora
-     </span>
-    </a>
-    <a aria-label="Wallpapers para PC" class="btn-icon group flex flex-col items-center bg-[#1e293b] hover:bg-[#334155] rounded-xl shadow-lg p-6 w-56 sm:w-64 transition-smooth transform hover:scale-105 select-none" href="wallpapers.html">
-     <div class="text-5xl mb-3 text-[#60a5fa] group-hover:text-[#3b82f6] transition-smooth">
-      <i class="fas fa-image">
-      </i>
-     </div>
-     <span class="text-white font-semibold text-lg sm:text-xl text-center">
-      Wallpapers para PC
-     </span>
-    </a>
-    <button aria-label="Comandos para Otimizar o PC" class="btn-icon group flex flex-col items-center bg-[#1e293b] hover:bg-[#334155] rounded-xl shadow-lg p-6 w-56 sm:w-64 transition-smooth transform hover:scale-105 select-none" id="openModalBtn" type="button">
-     <div class="text-5xl mb-3 text-[#60a5fa] group-hover:text-[#3b82f6] transition-smooth">
-      <i class="fas fa-laptop-code">
-      </i>
-     </div>
-     <span class="text-white font-semibold text-lg sm:text-xl text-center">
-      Comandos para Otimizar o PC
-     </span>
-    </button>
-   </section>
-   <!-- Modal para comandos -->
-   <div aria-describedby="modalDesc" aria-labelledby="modalTitle" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity z-50" id="modal" role="dialog">
-    <div class="modal-content bg-[#1e293b] rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-y-auto p-6 shadow-lg relative">
-     <button aria-label="Fechar modal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-smooth text-2xl focus:outline-none" id="closeModalBtn">
-      <i class="fas fa-times">
-      </i>
-     </button>
-     <h2 class="text-3xl font-bold mb-4 text-white text-center" id="modalTitle">
-      70 Melhores Comandos para Otimização do Windows
-     </h2>
-     <p class="mb-6 text-gray-300 text-center max-w-xl mx-auto" id="modalDesc">
-      Clique no botão "Copiar" para copiar o comando para a área de transferência.
-     </p>
-     <div class="space-y-4" id="commandsList">
-      <!-- Comandos gerados via JS -->
-     </div>
+</head>
+<body
+  class="bg-[#0f172a] flex items-center justify-center min-h-screen w-screen font-inter"
+>
+  <main
+    id="loading-screen"
+    class="flex flex-col items-center justify-center w-full h-full px-6 fade-in"
+    style="min-height: 100vh; min-width: 100vw;"
+  >
+    <p
+      class="text-[#94a3b8] text-lg sm:text-xl md:text-2xl font-semibold mb-8 select-none"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      Carregando... por @fideprotaofc
+    </p>
+    <div
+      class="w-4/5 max-w-3xl h-2.5 sm:h-3 md:h-4 rounded-full bg-[#1f2937] shadow-xl overflow-hidden"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+      aria-label="Barra de progresso de carregamento"
+    >
+      <div
+        id="progress-bar-fill"
+        class="h-full rounded-full gradient-animated transition-[width] duration-300 ease-in-out"
+        style="width: 0%"
+      ></div>
     </div>
-   </div>
-   <!-- Conversor de Unidades -->
-   <section aria-label="Conversor de Unidades" class="max-w-4xl mx-auto bg-[#1e293b] rounded-2xl p-6 shadow-lg">
-    <h3 class="text-2xl font-semibold mb-6 text-white text-center">
-     Conversor de Unidades
-    </h3>
-    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-     <select class="bg-[#0f172a] text-white rounded-xl p-3 shadow-inner w-full sm:w-48 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] transition-smooth" id="unitType">
-      <option value="storage">
-       KB ↔ MB ↔ GB
-      </option>
-      <option value="temperature">
-       Celsius ↔ Fahrenheit
-      </option>
-      <option value="distance">
-       KM ↔ Milhas
-      </option>
-     </select>
-     <input class="bg-[#0f172a] text-white rounded-xl p-3 shadow-inner w-full sm:w-48 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] transition-smooth" id="inputValue" min="0" placeholder="Digite o valor" step="any" type="number"/>
-     <select class="bg-[#0f172a] text-white rounded-xl p-3 shadow-inner w-full sm:w-48 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] transition-smooth" id="unitFrom">
-     </select>
-     <select class="bg-[#0f172a] text-white rounded-xl p-3 shadow-inner w-full sm:w-48 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#3b82f6] transition-smooth" id="unitTo">
-     </select>
-    </div>
-    <div aria-atomic="true" aria-live="polite" class="mt-6 text-center text-xl font-semibold text-[#60a5fa]" id="conversionResult">
-    </div>
-   </section>
-   <!-- Gerador de Senhas Fortes -->
-   <section aria-label="Gerador de Senhas Fortes" class="max-w-4xl mx-auto bg-[#1e293b] rounded-2xl p-6 shadow-lg">
-    <h3 class="text-2xl font-semibold mb-6 text-white text-center">
-     Gerador de Senhas Fortes
-    </h3>
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-     <label class="text-gray-300 font-medium" for="passwordLength">
-      Comprimento:
-     </label>
-     <input aria-label="Comprimento da senha" aria-valuemax="64" aria-valuemin="8" aria-valuenow="16" class="w-48 accent-[#3b82f6]" id="passwordLength" max="64" min="8" type="range" value="16"/>
-     <span class="text-white font-semibold w-10 text-center select-none" id="lengthValue">
-      16
-     </span>
-    </div>
-    <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-     <button class="flex items-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] transition-smooth text-white font-semibold py-3 px-6 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#60a5fa]" id="generatePasswordBtn">
-      <i class="fas fa-lock">
-      </i>
-      Gerar senha
-     </button>
-     <input aria-label="Senha gerada" class="bg-[#0f172a] text-white rounded-xl p-3 shadow-inner w-full sm:w-96 text-center select-all" id="passwordOutput" readonly="" type="text"/>
-     <button aria-label="Copiar senha gerada" class="bg-[#2563eb] hover:bg-[#1e40af] transition-smooth text-white font-semibold py-3 px-6 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#60a5fa]" id="copyPasswordBtn">
-      <i class="fas fa-copy">
-      </i>
-     </button>
-    </div>
-   </section>
-   <!-- Verificador de IP Público -->
-   <section aria-label="Verificador de IP Público" class="max-w-4xl mx-auto bg-[#1e293b] rounded-2xl p-6 shadow-lg text-center">
-    <h3 class="text-2xl font-semibold mb-6 text-white">
-     Verificador de IP Público
-    </h3>
-    <div class="bg-[#0f172a] rounded-xl p-6 text-3xl font-mono text-[#60a5fa] select-all shadow-inner inline-block min-w-[280px]" id="ipBlock">
-     Carregando IP...
-    </div>
-    <button aria-label="Copiar IP público" class="ml-4 bg-[#3b82f6] hover:bg-[#2563eb] transition-smooth text-white font-semibold py-3 px-6 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#60a5fa]" id="copyIpBtn">
-     <i class="fas fa-copy">
-     </i>
-     Copiar IP
-    </button>
-   </section>
-   <!-- Relógio com Hora Atual e Data -->
-   <section aria-label="Relógio com Hora Atual e Data" class="max-w-4xl mx-auto bg-[#1e293b] rounded-2xl p-6 shadow-lg text-center select-none">
-    <div class="text-5xl font-mono font-bold text-[#60a5fa] tracking-widest" id="clock">
-    </div>
-    <div class="text-xl text-gray-300 mt-1" id="date">
-    </div>
-   </section>
-  
-   <!-- Área de Dicas Rápidas -->
-   <section aria-label="Área de Dicas Rápidas" class="max-w-7xl mx-auto bg-[#1e293b] rounded-2xl p-6 shadow-lg">
-    <h3 class="text-2xl font-semibold mb-6 text-white text-center">
-     Dicas Rápidas
-    </h3>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-     <article class="bg-[#0f172a] rounded-xl p-5 shadow-lg flex flex-col items-center text-center transition-smooth hover:scale-105 cursor-default">
-      <i class="fas fa-keyboard fa-3x text-[#3b82f6] mb-4">
-      </i>
-      <h4 class="text-xl font-semibold mb-2 text-white">
-       Atalhos do Windows
-      </h4>
-      <p class="text-gray-300 text-sm leading-relaxed">
-       Use
-       <kbd class="bg-[#334155] rounded px-1.5 py-0.5 font-mono">
-        Win + D
-       </kbd>
-       para mostrar a área de trabalho rapidamente.
-      </p>
-     </article>
-     <article class="bg-[#0f172a] rounded-xl p-5 shadow-lg flex flex-col items-center text-center transition-smooth hover:scale-105 cursor-default">
-      <i class="fas fa-terminal fa-3x text-[#3b82f6] mb-4">
-      </i>
-      <h4 class="text-xl font-semibold mb-2 text-white">
-       Comandos CMD úteis
-      </h4>
-      <p class="text-gray-300 text-sm leading-relaxed">
-       Use
-       <kbd class="bg-[#334155] rounded px-1.5 py-0.5 font-mono">
-        ipconfig /flushdns
-       </kbd>
-       para limpar o cache DNS.
-      </p>
-     </article>
-     <article class="bg-[#0f172a] rounded-xl p-5 shadow-lg flex flex-col items-center text-center transition-smooth hover:scale-105 cursor-default">
-      <i class="fas fa-cogs fa-3x text-[#3b82f6] mb-4">
-      </i>
-      <h4 class="text-xl font-semibold mb-2 text-white">
-       Otimizações simples
-      </h4>
-      <p class="text-gray-300 text-sm leading-relaxed">
-       Desative programas de inicialização desnecessários para acelerar o boot.
-      </p>
-     </article>
-    </div>
-   </section>
-   <!-- Temporizador / Cronômetro Online -->
-   <section aria-label="Temporizador e Cronômetro Online" class="max-w-4xl mx-auto bg-[#1e293b] rounded-2xl p-6 shadow-lg text-center select-none">
-    <h3 class="text-2xl font-semibold mb-6 text-white">
-     Temporizador / Cronômetro Online
-    </h3>
-    <div class="text-6xl font-mono font-bold text-[#60a5fa] mb-6 tracking-widest tabular-nums" id="timerDisplay">
-     00:00:00
-    </div>
-    <div class="flex justify-center gap-6">
-     <button aria-label="Iniciar temporizador" class="bg-[#3b82f6] hover:bg-[#2563eb] transition-smooth text-white font-semibold py-3 px-8 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#60a5fa]" id="startBtn">
-      Iniciar
-     </button>
-     <button aria-label="Pausar temporizador" class="bg-[#475569] hover:bg-[#334155] transition-smooth text-white font-semibold py-3 px-8 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#60a5fa]" disabled="" id="pauseBtn">
-      Pausar
-     </button>
-     <button aria-label="Resetar temporizador" class="bg-[#ef4444] hover:bg-[#b91c1c] transition-smooth text-white font-semibold py-3 px-8 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#f87171]" id="resetBtn">
-      Resetar
-     </button>
-    </div>
-   </section>
   </main>
-  <footer class="bg-[#1e293b] py-6 text-center text-gray-400 select-none">
-   <p class="text-sm sm:text-base">
-    Feito com
-    <span aria-label="computador" role="img">
-     💻
-    </span>
-    por
-    <a class="text-[#3b82f6] hover:text-[#60a5fa] font-semibold transition-smooth" href="https://instagram.com/fideprotaofc" rel="noopener noreferrer" target="_blank">
-     @fideprotaofc
-    </a>
-   </p>
-   <div class="mt-3 flex justify-center gap-6 text-gray-400">
-    <a aria-label="GitHub" class="hover:text-white transition-smooth text-2xl" href="https://github.com/fideprotaofc" rel="noopener noreferrer" target="_blank">
-     <i class="fab fa-github">
-     </i>
-    </a>
-    <a aria-label="Instagram" class="hover:text-pink-500 transition-smooth text-2xl" href="https://instagram.com/fideprotaofc" rel="noopener noreferrer" target="_blank">
-     <i class="fab fa-instagram">
-     </i>
-    </a>
-    <a aria-label="Twitter" class="hover:text-[#60a5fa] transition-smooth text-2xl" href="https://twitter.com/fideprotaofc" rel="noopener noreferrer" target="_blank">
-     <i class="fab fa-twitter">
-     </i>
-    </a>
-   </div>
-  </footer>
+
   <script>
-   // Modal comandos
-  const modal = document.getElementById('modal');
-  const openModalBtn = document.getElementById('openModalBtn');
-  const closeModalBtn = document.getElementById('closeModalBtn');
-  const commandsList = document.getElementById('commandsList');
+    (() => {
+      const progressBar = document.getElementById("progress-bar-fill");
+      const loadingScreen = document.getElementById("loading-screen");
+      const totalDuration = 2500; // 2.5 seconds
+      const frameRate = 60; // frames per second
+      const totalFrames = (totalDuration / 1000) * frameRate;
+      let currentFrame = 0;
 
-  // 70 comandos para otimização do Windows (exemplo com título, descrição e comando)
-  const commands = [
-    {title: "Limpar cache DNS", desc: "Limpa o cache DNS para resolver problemas de conexão.", cmd: "ipconfig /flushdns"},
-    {title: "Liberar espaço em disco", desc: "Remove arquivos temporários e desnecessários.", cmd: "cleanmgr"},
-    {title: "Verificar integridade do sistema", desc: "Verifica e repara arquivos do sistema corrompidos.", cmd: "sfc /scannow"},
-    {title: "Desfragmentar disco", desc: "Otimiza o disco rígido para melhor desempenho.", cmd: "defrag C:"},
-    {title: "Exibir processos ativos", desc: "Mostra todos os processos em execução.", cmd: "tasklist"},
-    {title: "Finalizar processo", desc: "Encerra um processo pelo PID.", cmd: "taskkill /PID <PID> /F"},
-    {title: "Desabilitar programas na inicialização", desc: "Abre o gerenciador de tarefas na aba inicialização.", cmd: "taskmgr"},
-    {title: "Verificar uso de disco", desc: "Mostra o uso do disco por pasta.", cmd: "du -h"},
-    {title: "Mostrar configurações IP", desc: "Exibe as configurações IP atuais.", cmd: "ipconfig /all"},
-    {title: "Renovar IP", desc: "Libera e renova o endereço IP.", cmd: "ipconfig /release && ipconfig /renew"},
-    {title: "Mostrar conexões de rede", desc: "Exibe conexões de rede ativas.", cmd: "netstat -an"},
-    {title: "Limpar arquivos temporários", desc: "Remove arquivos temporários do usuário.", cmd: "del /q/f/s %TEMP%\\*"},
-    {title: "Desabilitar hibernação", desc: "Desativa o arquivo de hibernação para liberar espaço.", cmd: "powercfg -h off"},
-    {title: "Ativar hibernação", desc: "Ativa o arquivo de hibernação.", cmd: "powercfg -h on"},
-    {title: "Mostrar drivers instalados", desc: "Lista todos os drivers instalados.", cmd: "driverquery"},
-    {title: "Atualizar políticas de grupo", desc: "Força atualização das políticas de grupo.", cmd: "gpupdate /force"},
-    {title: "Mostrar informações do sistema", desc: "Exibe informações detalhadas do sistema.", cmd: "systeminfo"},
-    {title: "Desabilitar serviços desnecessários", desc: "Abre o gerenciador de serviços.", cmd: "services.msc"},
-    {title: "Verificar erros no disco", desc: "Verifica e repara erros no disco.", cmd: "chkdsk C: /f /r"},
-    {title: "Mostrar espaço em disco", desc: "Exibe espaço livre e usado no disco.", cmd: "wmic logicaldisk get size,freespace,caption"},
-    {title: "Limpar cache do Windows Update", desc: "Para o serviço e limpa cache do Windows Update.", cmd: "net stop wuauserv && del /q /s %windir%\\SoftwareDistribution\\* && net start wuauserv"},
-    {title: "Mostrar usuários do sistema", desc: "Lista todos os usuários locais.", cmd: "net user"},
-    {title: "Adicionar usuário", desc: "Adiciona um novo usuário local.", cmd: "net user <nome> <senha> /add"},
-    {title: "Remover usuário", desc: "Remove um usuário local.", cmd: "net user <nome> /delete"},
-    {title: "Mostrar grupos locais", desc: "Lista grupos locais do sistema.", cmd: "net localgroup"},
-    {title: "Adicionar usuário a grupo", desc: "Adiciona usuário a grupo local.", cmd: "net localgroup <grupo> <usuario> /add"},
-    {title: "Remover usuário de grupo", desc: "Remove usuário de grupo local.", cmd: "net localgroup <grupo> <usuario> /delete"},
-    {title: "Mostrar portas abertas", desc: "Exibe portas TCP/UDP abertas.", cmd: "netstat -aon"},
-    {title: "Liberar cache ARP", desc: "Limpa cache ARP.", cmd: "arp -d"},
-    {title: "Mostrar tabela ARP", desc: "Exibe tabela ARP.", cmd: "arp -a"},
-    {title: "Mostrar rotas de rede", desc: "Exibe tabela de rotas.", cmd: "route print"},
-    {title: "Adicionar rota estática", desc: "Adiciona rota estática.", cmd: "route add <destino> mask <máscara> <gateway>"},
-    {title: "Remover rota estática", desc: "Remove rota estática.", cmd: "route delete <destino>"},
-    {title: "Mostrar variáveis de ambiente", desc: "Lista variáveis de ambiente.", cmd: "set"},
-    {title: "Definir variável de ambiente", desc: "Define variável de ambiente.", cmd: "setx <nome> <valor>"},
-    {title: "Mostrar processos em árvore", desc: "Exibe processos em formato de árvore.", cmd: "tasklist /v /fo list"},
-    {title: "Mostrar uso de CPU", desc: "Exibe uso de CPU por processo.", cmd: "wmic path Win32_PerfFormattedData_PerfProc_Process get Name,PercentProcessorTime"},
-    {title: "Mostrar uso de memória", desc: "Exibe uso de memória por processo.", cmd: "tasklist /fi \"memusage gt 10000\""},
-    {title: "Mostrar dispositivos USB", desc: "Lista dispositivos USB conectados.", cmd: "wmic path Win32_USBControllerDevice get Dependent"},
-    {title: "Mostrar eventos do sistema", desc: "Exibe eventos do sistema.", cmd: "wevtutil qe System /c:10 /f:text"},
-    {title: "Limpar logs do sistema", desc: "Limpa logs do sistema.", cmd: "wevtutil cl System"},
-    {title: "Mostrar configurações de energia", desc: "Exibe configurações de energia.", cmd: "powercfg /list"},
-    {title: "Criar ponto de restauração", desc: "Cria ponto de restauração do sistema.", cmd: "wmic.exe /Namespace:\\\\root\\default Path SystemRestore Call CreateRestorePoint \"Ponto de Restauração\", 100, 7"},
-    {title: "Mostrar programas instalados", desc: "Lista programas instalados.", cmd: "wmic product get name,version"},
-    {title: "Desinstalar programa", desc: "Desinstala programa pelo nome.", cmd: "wmic product where name=\"<nome>\" call uninstall"},
-    {title: "Mostrar conexões Wi-Fi", desc: "Lista redes Wi-Fi conhecidas.", cmd: "netsh wlan show profiles"},
-    {title: "Mostrar senha Wi-Fi", desc: "Exibe senha da rede Wi-Fi.", cmd: "netsh wlan show profile name=\"<nome>\" key=clear"},
-    {title: "Desabilitar adaptador de rede", desc: "Desativa adaptador de rede.", cmd: "netsh interface set interface \"<nome>\" admin=disable"},
-    {title: "Habilitar adaptador de rede", desc: "Ativa adaptador de rede.", cmd: "netsh interface set interface \"<nome>\" admin=enable"},
-    {title: "Mostrar uso de disco por pasta", desc: "Exibe uso de disco por pasta.", cmd: "du -h"},
-    {title: "Mostrar espaço em disco", desc: "Exibe espaço em disco.", cmd: "fsutil volume diskfree C:"},
-    {title: "Mostrar configurações de firewall", desc: "Exibe regras do firewall.", cmd: "netsh advfirewall firewall show rule name=all"},
-    {title: "Ativar firewall", desc: "Ativa firewall do Windows.", cmd: "netsh advfirewall set allprofiles state on"},
-    {title: "Desativar firewall", desc: "Desativa firewall do Windows.", cmd: "netsh advfirewall set allprofiles state off"},
-    {title: "Mostrar status do Windows Update", desc: "Exibe status do Windows Update.", cmd: "sc query wuauserv"},
-    {title: "Reiniciar serviço Windows Update", desc: "Reinicia serviço do Windows Update.", cmd: "net stop wuauserv && net start wuauserv"},
-    {title: "Mostrar configurações de proxy", desc: "Exibe configurações de proxy.", cmd: "netsh winhttp show proxy"},
-    {title: "Configurar proxy", desc: "Define configurações de proxy.", cmd: "netsh winhttp set proxy <proxy-server>"},
-    {title: "Remover proxy", desc: "Remove configurações de proxy.", cmd: "netsh winhttp reset proxy"},
-    {title: "Mostrar status do disco", desc: "Exibe status SMART do disco.", cmd: "wmic diskdrive get status"},
-    {title: "Mostrar informações da BIOS", desc: "Exibe informações da BIOS.", cmd: "wmic bios get serialnumber,version"},
-    {title: "Mostrar informações da CPU", desc: "Exibe informações da CPU.", cmd: "wmic cpu get name,numberofcores,maxclockspeed"},
-    {title: "Mostrar informações da memória RAM", desc: "Exibe informações da RAM.", cmd: "wmic memorychip get capacity,manufacturer,speed"},
-    {title: "Mostrar informações da placa-mãe", desc: "Exibe informações da placa-mãe.", cmd: "wmic baseboard get product,manufacturer,serialnumber"},
-    {title: "Mostrar informações da placa de vídeo", desc: "Exibe informações da GPU.", cmd: "wmic path win32_VideoController get name,driverversion"},
-    {title: "Mostrar usuários conectados", desc: "Lista usuários conectados no momento.", cmd: "query user"},
-    {title: "Mostrar sessões ativas", desc: "Exibe sessões ativas no sistema.", cmd: "qwinsta"},
-    {title: "Bloquear estação de trabalho", desc: "Bloqueia a tela do Windows.", cmd: "rundll32.exe user32.dll,LockWorkStation"},
-    {title: "Mostrar variáveis de ambiente do sistema", desc: "Exibe variáveis de ambiente do sistema.", cmd: "setx /M"},
-    {title: "Mostrar configurações de rede", desc: "Exibe configurações detalhadas de rede.", cmd: "netsh interface ip show config"},
-    {title: "Mostrar rotas persistentes", desc: "Exibe rotas persistentes.", cmd: "route print -p"},
-    {title: "Adicionar rota persistente", desc: "Adiciona rota persistente.", cmd: "route -p add <destino> mask <máscara> <gateway>"},
-    {title: "Remover rota persistente", desc: "Remove rota persistente.", cmd: "route -p delete <destino>"},
-    {title: "Mostrar status do serviço", desc: "Exibe status de um serviço.", cmd: "sc query <nome_serviço>"},
-    {title: "Iniciar serviço", desc: "Inicia um serviço.", cmd: "net start <nome_serviço>"},
-    {title: "Parar serviço", desc: "Para um serviço.", cmd: "net stop <nome_serviço>"},
-    {title: "Mostrar logs de eventos", desc: "Exibe logs de eventos do sistema.", cmd: "wevtutil qe System /c:20 /f:text"},
-  ];
+      function animateProgress() {
+        currentFrame++;
+        const progress = Math.min(
+          (currentFrame / totalFrames) * 100,
+          100
+        ).toFixed(2);
+        progressBar.style.width = progress + "%";
+        progressBar.setAttribute("aria-valuenow", progress);
 
-  function createCommandCard(command) {
-    const card = document.createElement('div');
-    card.className = "bg-[#0f172a] rounded-xl p-4 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4";
-
-    const textDiv = document.createElement('div');
-    textDiv.className = "flex-1";
-
-    const title = document.createElement('h3');
-    title.className = "text-lg font-semibold text-white mb-1";
-    title.textContent = command.title;
-
-    const desc = document.createElement('p');
-    desc.className = "text-gray-300 text-sm";
-    desc.textContent = command.desc;
-
-    textDiv.appendChild(title);
-    textDiv.appendChild(desc);
-
-    const btn = document.createElement('button');
-    btn.className = "bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold py-2 px-4 rounded-xl shadow-lg transition-smooth focus:outline-none focus:ring-2 focus:ring-[#60a5fa] flex items-center gap-2";
-    btn.setAttribute('aria-label', `Copiar comando: ${command.cmd}`);
-    btn.innerHTML = '<i class="fas fa-copy"></i> Copiar';
-    btn.addEventListener('click', () => {
-      navigator.clipboard.writeText(command.cmd).then(() => {
-        btn.textContent = 'Copiado!';
-        setTimeout(() => {
-          btn.innerHTML = '<i class="fas fa-copy"></i> Copiar';
-        }, 1500);
-      });
-    });
-
-    card.appendChild(textDiv);
-    card.appendChild(btn);
-
-    return card;
-  }
-
-  function openModal() {
-    modal.classList.remove('opacity-0', 'pointer-events-none');
-    modal.classList.add('opacity-100');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal() {
-    modal.classList.add('opacity-0', 'pointer-events-none');
-    modal.classList.remove('opacity-100');
-    document.body.style.overflow = '';
-  }
-
-  openModalBtn.addEventListener('click', openModal);
-  closeModalBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('pointer-events-none')) {
-      closeModal();
-    }
-  });
-
-  // Preencher lista de comandos no modal
-  commands.forEach(cmd => {
-    commandsList.appendChild(createCommandCard(cmd));
-  });
-
-  // Conversor de unidades
-  const unitType = document.getElementById('unitType');
-  const unitFrom = document.getElementById('unitFrom');
-  const unitTo = document.getElementById('unitTo');
-  const inputValue = document.getElementById('inputValue');
-  const conversionResult = document.getElementById('conversionResult');
-
-  const unitsData = {
-    storage: ['KB', 'MB', 'GB'],
-    temperature: ['Celsius', 'Fahrenheit'],
-    distance: ['KM', 'Milhas']
-  };
-
-  function populateUnits(type) {
-    unitFrom.innerHTML = '';
-    unitTo.innerHTML = '';
-    unitsData[type].forEach(u => {
-      const optionFrom = document.createElement('option');
-      optionFrom.value = u;
-      optionFrom.textContent = u;
-      unitFrom.appendChild(optionFrom);
-
-      const optionTo = document.createElement('option');
-      optionTo.value = u;
-      optionTo.textContent = u;
-      unitTo.appendChild(optionTo);
-    });
-    unitFrom.selectedIndex = 0;
-    unitTo.selectedIndex = 1 < unitsData[type].length ? 1 : 0;
-  }
-
-  function convertUnits() {
-    let val = parseFloat(inputValue.value);
-    if (isNaN(val)) {
-      conversionResult.textContent = '';
-      return;
-    }
-    const from = unitFrom.value;
-    const to = unitTo.value;
-    if (from === to) {
-      conversionResult.textContent = `${val} ${to}`;
-      return;
-    }
-    let result = null;
-
-    if (unitType.value === 'storage') {
-      // KB, MB, GB
-      const map = { KB: 1, MB: 1024, GB: 1024 * 1024 };
-      result = val * map[from] / map[to];
-      conversionResult.textContent = `${result.toFixed(3)} ${to}`;
-    } else if (unitType.value === 'temperature') {
-      if (from === 'Celsius' && to === 'Fahrenheit') {
-        result = (val * 9/5) + 32;
-      } else if (from === 'Fahrenheit' && to === 'Celsius') {
-        result = (val - 32) * 5/9;
-      }
-      conversionResult.textContent = `${result.toFixed(2)} °${to === 'Celsius' ? 'C' : 'F'}`;
-    } else if (unitType.value === 'distance') {
-      // KM <-> Milhas (1 milha = 1.60934 km)
-      if (from === 'KM' && to === 'Milhas') {
-        result = val / 1.60934;
-      } else if (from === 'Milhas' && to === 'KM') {
-        result = val * 1.60934;
-      }
-      conversionResult.textContent = `${result.toFixed(3)} ${to}`;
-    }
-  }
-
-  unitType.addEventListener('change', () => {
-    populateUnits(unitType.value);
-    inputValue.value = '';
-    conversionResult.textContent = '';
-  });
-  unitFrom.addEventListener('change', convertUnits);
-  unitTo.addEventListener('change', convertUnits);
-  inputValue.addEventListener('input', convertUnits);
-
-  populateUnits(unitType.value);
-
-  // Gerador de senhas fortes
-  const passwordLength = document.getElementById('passwordLength');
-  const lengthValue = document.getElementById('lengthValue');
-  const generatePasswordBtn = document.getElementById('generatePasswordBtn');
-  const passwordOutput = document.getElementById('passwordOutput');
-  const copyPasswordBtn = document.getElementById('copyPasswordBtn');
-
-  lengthValue.textContent = passwordLength.value;
-
-  passwordLength.addEventListener('input', () => {
-    lengthValue.textContent = passwordLength.value;
-  });
-
-  function generatePassword(length) {
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}|;:,.<>?";
-    let retVal = "";
-    for (let i = 0, n = charset.length; i < length; ++i) {
-      retVal += charset.charAt(Math.floor(Math.random() * n));
-    }
-    return retVal;
-  }
-
-  generatePasswordBtn.addEventListener('click', () => {
-    const length = parseInt(passwordLength.value, 10);
-    const pwd = generatePassword(length);
-    passwordOutput.value = pwd;
-  });
-
-  copyPasswordBtn.addEventListener('click', () => {
-    if (!passwordOutput.value) return;
-    navigator.clipboard.writeText(passwordOutput.value).then(() => {
-      copyPasswordBtn.textContent = 'Copiado!';
-      setTimeout(() => {
-        copyPasswordBtn.innerHTML = '<i class="fas fa-copy"></i>';
-      }, 1500);
-    });
-  });
-
-  // Verificador de IP Público
-  const ipBlock = document.getElementById('ipBlock');
-  const copyIpBtn = document.getElementById('copyIpBtn');
-
-  async function fetchIP() {
-    try {
-      const res = await fetch('https://api.ipify.org?format=json');
-      const data = await res.json();
-      ipBlock.textContent = data.ip;
-    } catch {
-      ipBlock.textContent = 'Erro ao obter IP';
-    }
-  }
-  fetchIP();
-
-  copyIpBtn.addEventListener('click', () => {
-    const ip = ipBlock.textContent;
-    if (!ip || ip === 'Carregando IP...' || ip === 'Erro ao obter IP') return;
-    navigator.clipboard.writeText(ip).then(() => {
-      copyIpBtn.textContent = 'Copiado!';
-      setTimeout(() => {
-        copyIpBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar IP';
-      }, 1500);
-    });
-  });
-
-  // Relógio com hora atual e data
-  const clock = document.getElementById('clock');
-  const date = document.getElementById('date');
-
-  function updateClock() {
-    const now = new Date();
-    const h = now.getHours().toString().padStart(2,'0');
-    const m = now.getMinutes().toString().padStart(2,'0');
-    const s = now.getSeconds().toString().padStart(2,'0');
-    clock.textContent = `${h}:${m}:${s}`;
-
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    date.textContent = now.toLocaleDateString('pt-BR', options);
-  }
-  updateClock();
-  setInterval(updateClock, 1000);
-
-  // Galeria filtros e download
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const galleryGrid = document.getElementById('galleryGrid');
-
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => {
-        b.classList.remove('bg-[#3b82f6]', 'text-white');
-        b.classList.add('bg-[#475569]', 'text-gray-300');
-      });
-      btn.classList.add('bg-[#3b82f6]', 'text-white');
-      btn.classList.remove('bg-[#475569]', 'text-gray-300');
-
-      const filter = btn.getAttribute('data-filter');
-      const items = galleryGrid.children;
-      for (let item of items) {
-        if (filter === 'all' || item.getAttribute('data-category') === filter) {
-          item.classList.remove('hidden');
+        if (currentFrame < totalFrames) {
+          requestAnimationFrame(animateProgress);
         } else {
-          item.classList.add('hidden');
+          // Fade out and redirect
+          loadingScreen.classList.remove("fade-in");
+          loadingScreen.classList.add("fade-out");
+          loadingScreen.style.pointerEvents = "none";
+
+          setTimeout(() => {
+            window.location.href = "inicio.html";
+          }, 800);
         }
       }
-    });
-  });
 
-  function downloadImage(url) {
-    // Cria um link temporário para download
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = '';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  // Temporizador / Cronômetro Online
-  const timerDisplay = document.getElementById('timerDisplay');
-  const startBtn = document.getElementById('startBtn');
-  const pauseBtn = document.getElementById('pauseBtn');
-  const resetBtn = document.getElementById('resetBtn');
-
-  let timer = 0; // em segundos
-  let intervalId = null;
-  let running = false;
-
-  function formatTime(seconds) {
-    const h = Math.floor(seconds / 3600).toString().padStart(2,'0');
-    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2,'0');
-    const s = (seconds % 60).toString().padStart(2,'0');
-    return `${h}:${m}:${s}`;
-  }
-
-  function updateTimerDisplay() {
-    timerDisplay.textContent = formatTime(timer);
-  }
-
-  startBtn.addEventListener('click', () => {
-    if (running) return;
-    running = true;
-    startBtn.disabled = true;
-    pauseBtn.disabled = false;
-    intervalId = setInterval(() => {
-      timer++;
-      updateTimerDisplay();
-    }, 1000);
-  });
-
-  pauseBtn.addEventListener('click', () => {
-    if (!running) return;
-    running = false;
-    startBtn.disabled = false;
-    pauseBtn.disabled = true;
-    clearInterval(intervalId);
-  });
-
-  resetBtn.addEventListener('click', () => {
-    running = false;
-    timer = 0;
-    updateTimerDisplay();
-    startBtn.disabled = false;
-    pauseBtn.disabled = true;
-    clearInterval(intervalId);
-  });
-
-  updateTimerDisplay();
-  pauseBtn.disabled = true;
+      // Start animation on DOM ready
+      document.addEventListener("DOMContentLoaded", () => {
+        requestAnimationFrame(animateProgress);
+      });
+    })();
   </script>
- </body>
+</body>
 </html>
