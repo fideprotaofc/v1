@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galeria de Wallpapers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #121212;
+      --text: #e0e0e0;
+      --border: #333;
+      --button-bg: #4f46e5;
+      --button-hover: #3730a3;
+    }
+    [data-theme="light"] {
+      --bg: #f5f5f5;
+      --text: #111;
+      --border: #ccc;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background-color: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    button {
+      background-color: var(--button-bg);
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: var(--button-hover);
+    }
+    main.gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .image-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      background-color: #222;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+    .image-wrapper img {
+      width: 100%;
+      display: block;
+    }
+    .download-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: var(--button-bg);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.875rem;
+      font-weight: bold;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      text-decoration: none;
+    }
+    .image-wrapper:hover .download-btn {
+      opacity: 1;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #888;
+      border-top: 1px solid var(--border);
+      background-color: var(--bg);
+    }
+    #modal {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #modal img {
+      max-width: 90%;
+      max-height: 90vh;
+      border-radius: 10px;
+    }
+    #modal[open] {
+      display: flex;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <header>
+    <h1>Galeria de Wallpapers</h1>
+    <div class="actions">
+      <button onclick="location.href='index.html'">Voltar para Início</button>
+      <button onclick="toggleTheme()" id="themeToggle">Modo Claro</button>
+    </div>
+  </header>
+
+  <main class="gallery">
+    <!-- Imagens adicionadas automaticamente -->
+    <!-- Apenas substitua ou adicione mais arquivos à lista abaixo se necessário -->
+    <script>
+      const images = [
+        '40.png','00151.png','1383964.png','Alma.jpeg','asa.jpg','asas.jpg','asasas.jpg','batman.jpg',
+        'be456f6c6fbbff973acad5852df235f2.png','Broken_1.jpg','byknw_2-1.png','byknw_quality.png','desconhecido.png',
+        'download.jpeg','dsdsds.png','dsdsdsds.jpg','ghost.png','image.png','imagew.png','imajge.png','kggj.png',
+        'oboi31.png','recs.jpg','sdsdsd.jpg','sdsdsdsdsdsd.png','wallpaper.jpg'
+      ];
+      document.write(
+        images.map(file => `
+        <div class="image-wrapper">
+          <img src="wallpapers/${file}" alt="${file}" onclick="showModal(this.src, this.alt)" />
+          <a href="wallpapers/${file}" download class="download-btn">Download</a>
+        </div>`).join('')
+      );
+    </script>
+  </main>
+
+  <footer>
+    &copy; 2024 Galeria de Wallpapers. Todos os direitos reservados.
+  </footer>
+
+  <!-- Modal -->
+  <dialog id="modal" onclick="this.close()">
+    <img src="" alt="" id="modal-img" />
+  </dialog>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? 'Modo Escuro' : 'Modo Claro';
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    }
+
+    (function () {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.body.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? 'Modo Claro' : 'Modo Escuro';
+      }
+    })();
+
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    function showModal(src, alt) {
+      modalImg.src = src;
+      modalImg.alt = alt;
+      modal.setAttribute('open', 'true');
+    }
+
+    modal.addEventListener('click', () => modal.removeAttribute('open'));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') modal.removeAttribute('open');
+    });
+  </script>
+</body>
+</html>
