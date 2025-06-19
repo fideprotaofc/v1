@@ -1,0 +1,68 @@
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Busca Google - Modo Escuro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Roboto&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <style>
+    html, body {
+      font-family: 'Inter', 'Roboto', sans-serif;
+      background-color: #121212;
+      color: white;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen justify-center items-center bg-gray-900 text-white px-4">
+  <main class="w-full max-w-md">
+    <form id="searchForm" class="flex gap-3" role="search" aria-label="Formulário de busca Google">
+      <input
+        type="text"
+        id="searchInput"
+        name="q"
+        placeholder="Pesquisar no Google..."
+        aria-label="Campo de busca"
+        autocomplete="off"
+        class="flex-grow rounded-full bg-gray-800 text-white placeholder-gray-400 shadow-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 px-5 py-3 text-lg"
+        required
+      />
+      <button
+        type="submit"
+        aria-label="Botão buscar"
+        class="rounded-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 px-6 py-3 text-lg font-semibold select-none"
+      >
+        Buscar
+      </button>
+    </form>
+  </main>
+
+  <footer class="mt-12 mb-6 flex flex-col items-center gap-4 text-gray-400 text-sm select-none">
+    <span>Feito por Fideprotaofc <span aria-hidden="true">💻</span></span>
+    <button
+      type="button"
+      onclick="window.location.href='inicio.html'"
+      class="bg-[#5a48f5] text-white font-bold rounded-lg px-6 py-2 cursor-pointer transition duration-300 hover:bg-[#4a3adf] focus:outline-none focus:ring-2 focus:ring-[#5a48f5] select-none"
+      aria-label="Voltar para Início"
+    >
+      Voltar para Início
+    </button>
+  </footer>
+
+  <script>
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('searchInput');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = input.value.trim();
+      if (query.length > 0) {
+        const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+        window.location.href = url;
+      }
+    });
+  </script>
+</body>
+</html>
