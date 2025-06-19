@@ -1,1 +1,416 @@
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora Dark Theme</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <style>
+    /* Custom scrollbar for dark theme */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1f2937; /* gray-800 */
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #4c51bf; /* indigo-600 */
+      border-radius: 10px;
+      border: 2px solid #1f2937;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+  <main
+    role="main"
+    class="w-full max-w-md bg-gray-800 rounded-3xl shadow-2xl p-6 flex flex-col"
+  >
+    <!-- Display -->
+    <section
+      aria-label="Tela da calculadora"
+      id="display"
+      class="bg-gray-900 rounded-2xl p-6 mb-6 min-h-[5.5rem] flex flex-col justify-end break-words select-none"
+    >
+      <p
+        id="calculation"
+        class="text-gray-400 text-right text-sm sm:text-base font-mono break-words min-h-[1.25rem]"
+        aria-live="polite"
+      ></p>
+      <p
+        id="result"
+        class="text-white text-right text-4xl sm:text-5xl font-semibold font-mono"
+        aria-live="polite"
+      >
+        0
+      </p>
+    </section>
 
+    <!-- Buttons grid -->
+    <section
+      role="group"
+      aria-label="Teclado da calculadora"
+      class="grid grid-cols-4 gap-4 mb-6"
+    >
+      <!-- Clear -->
+      <button
+        type="button"
+        id="clear"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Limpar"
+      >
+        C
+      </button>
+
+      <!-- Empty placeholder for alignment -->
+      <div></div>
+
+      <!-- Empty placeholder for alignment -->
+      <div></div>
+
+      <!-- Divide -->
+      <button
+        type="button"
+        data-action="/"
+        class="bg-indigo-700 hover:bg-indigo-600 active:bg-indigo-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Dividir"
+      >
+        <i class="fas fa-divide"></i>
+      </button>
+
+      <!-- 7 -->
+      <button
+        type="button"
+        data-number="7"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 7"
+      >
+        7
+      </button>
+
+      <!-- 8 -->
+      <button
+        type="button"
+        data-number="8"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 8"
+      >
+        8
+      </button>
+
+      <!-- 9 -->
+      <button
+        type="button"
+        data-number="9"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 9"
+      >
+        9
+      </button>
+
+      <!-- Multiply -->
+      <button
+        type="button"
+        data-action="*"
+        class="bg-indigo-700 hover:bg-indigo-600 active:bg-indigo-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Multiplicar"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+
+      <!-- 4 -->
+      <button
+        type="button"
+        data-number="4"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 4"
+      >
+        4
+      </button>
+
+      <!-- 5 -->
+      <button
+        type="button"
+        data-number="5"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 5"
+      >
+        5
+      </button>
+
+      <!-- 6 -->
+      <button
+        type="button"
+        data-number="6"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 6"
+      >
+        6
+      </button>
+
+      <!-- Subtract -->
+      <button
+        type="button"
+        data-action="-"
+        class="bg-indigo-700 hover:bg-indigo-600 active:bg-indigo-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Subtrair"
+      >
+        <i class="fas fa-minus"></i>
+      </button>
+
+      <!-- 1 -->
+      <button
+        type="button"
+        data-number="1"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 1"
+      >
+        1
+      </button>
+
+      <!-- 2 -->
+      <button
+        type="button"
+        data-number="2"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 2"
+      >
+        2
+      </button>
+
+      <!-- 3 -->
+      <button
+        type="button"
+        data-number="3"
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 3"
+      >
+        3
+      </button>
+
+      <!-- Add -->
+      <button
+        type="button"
+        data-action="+"
+        class="bg-indigo-700 hover:bg-indigo-600 active:bg-indigo-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Somar"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+
+      <!-- 0 (span 2 columns) -->
+      <button
+        type="button"
+        data-number="0"
+        class="col-span-2 bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Número 0"
+      >
+        0
+      </button>
+
+      <!-- Decimal point -->
+      <button
+        type="button"
+        data-number="."
+        class="bg-gray-700 hover:bg-gray-600 active:bg-gray-500 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Ponto decimal"
+      >
+        .
+      </button>
+
+      <!-- Equals -->
+      <button
+        type="button"
+        id="equals"
+        class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-400 shadow-md rounded-xl text-lg font-semibold transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Igual"
+      >
+        <i class="fas fa-equals"></i>
+      </button>
+    </section>
+
+    <!-- Footer navigation button -->
+    <footer class="flex justify-center">
+      <a
+        href="inicio.html"
+        class="bg-[#5a48f5] hover:bg-[#4a3adf] active:bg-[#3a2cc9] text-white font-bold rounded-xl px-6 py-3 cursor-pointer shadow-md transition duration-200 ease-in-out select-none focus:outline-none focus:ring-2 focus:ring-[#5a48f5]"
+        role="button"
+        aria-label="Voltar para Início"
+      >
+        Voltar para Início
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const calculationEl = document.getElementById("calculation");
+      const resultEl = document.getElementById("result");
+      const buttons = document.querySelectorAll("button");
+      let calculation = "";
+      let result = null;
+      let lastInputIsOperator = false;
+
+      // Helper: Check if a character is an operator
+      function isOperator(char) {
+        return ["+", "-", "*", "/"].includes(char);
+      }
+
+      // Update the display
+      function updateDisplay() {
+        calculationEl.textContent = calculation || "";
+        if (result !== null) {
+          resultEl.textContent = result;
+        } else {
+          resultEl.textContent = calculation || "0";
+        }
+      }
+
+      // Clear all
+      function clearAll() {
+        calculation = "";
+        result = null;
+        lastInputIsOperator = false;
+        updateDisplay();
+      }
+
+      // Append number or decimal point
+      function appendNumber(num) {
+        if (num === ".") {
+          // Prevent multiple decimals in the current number
+          const parts = calculation.split(/[\+\-\*\/]/);
+          const lastNumber = parts[parts.length - 1];
+          if (lastNumber.includes(".")) return;
+          if (lastNumber === "") {
+            // If decimal pressed first, prepend 0
+            calculation += "0";
+          }
+        }
+        calculation += num;
+        lastInputIsOperator = false;
+        result = null;
+        updateDisplay();
+      }
+
+      // Append operator
+      function appendOperator(op) {
+        if (calculation === "") {
+          // If empty, only allow minus for negative number
+          if (op === "-") {
+            calculation += op;
+            lastInputIsOperator = true;
+            updateDisplay();
+          }
+          return;
+        }
+        if (lastInputIsOperator) {
+          // Replace last operator with new one
+          calculation = calculation.slice(0, -1) + op;
+        } else {
+          calculation += op;
+          lastInputIsOperator = true;
+        }
+        result = null;
+        updateDisplay();
+      }
+
+      // Calculate the expression safely
+      function calculateExpression(expr) {
+        try {
+          // Prevent invalid characters
+          if (/[^0-9+\-*/.]/.test(expr)) return null;
+          // Prevent ending with operator
+          if (isOperator(expr.slice(-1))) expr = expr.slice(0, -1);
+          // Evaluate expression
+          // eslint-disable-next-line no-eval
+          let evalResult = eval(expr);
+          if (evalResult === Infinity || evalResult === -Infinity) return "Erro";
+          if (isNaN(evalResult)) return "Erro";
+          // Limit decimal places
+          if (typeof evalResult === "number") {
+            evalResult = +evalResult.toFixed(10);
+          }
+          return evalResult.toString();
+        } catch {
+          return "Erro";
+        }
+      }
+
+      // Handle equals
+      function handleEquals() {
+        if (calculation === "") return;
+        const res = calculateExpression(calculation);
+        if (res === null || res === "Erro") {
+          result = "Erro";
+        } else {
+          result = res;
+          calculation = res;
+        }
+        lastInputIsOperator = false;
+        updateDisplay();
+      }
+
+      // Button click handler
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (btn.id === "clear") {
+            clearAll();
+            return;
+          }
+          if (btn.id === "equals") {
+            handleEquals();
+            return;
+          }
+          if (btn.hasAttribute("data-number")) {
+            appendNumber(btn.getAttribute("data-number"));
+            return;
+          }
+          if (btn.hasAttribute("data-action")) {
+            appendOperator(btn.getAttribute("data-action"));
+            return;
+          }
+        });
+      });
+
+      // Keyboard support
+      window.addEventListener("keydown", (e) => {
+        if (
+          (e.key >= "0" && e.key <= "9") ||
+          e.key === "." ||
+          e.key === "+" ||
+          e.key === "-" ||
+          e.key === "*" ||
+          e.key === "/"
+        ) {
+          e.preventDefault();
+          if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") {
+            appendOperator(e.key);
+          } else {
+            appendNumber(e.key);
+          }
+        } else if (e.key === "Enter" || e.key === "=") {
+          e.preventDefault();
+          handleEquals();
+        } else if (e.key === "Backspace") {
+          e.preventDefault();
+          if (calculation.length > 0) {
+            calculation = calculation.slice(0, -1);
+            lastInputIsOperator = isOperator(calculation.slice(-1));
+            result = null;
+            updateDisplay();
+          }
+        } else if (e.key.toLowerCase() === "c") {
+          e.preventDefault();
+          clearAll();
+        }
+      });
+
+      // Initialize display
+      clearAll();
+    })();
+  </script>
+</body>
+</html>
